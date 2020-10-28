@@ -7,6 +7,8 @@ echo
 # Set the project
 PROJECT=datapower
 oc new-project $PROJECT
+oc get secret ibm-entitlement-key --namespace=cp4i --export -o yaml |\
+   oc apply --namespace=datapower -f -
 
 # Define the location of the directories
 CONFIG_DIR=../drouter/config
