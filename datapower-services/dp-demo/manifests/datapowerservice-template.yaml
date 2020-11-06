@@ -10,7 +10,7 @@ spec:
   debug: false
   license:
     accept: true
-    use: developers
+    use: nonproduction
   version: 10.0.0
   replicas: PARM_REPLICA_COUNT
   resources:
