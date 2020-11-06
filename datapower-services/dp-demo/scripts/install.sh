@@ -5,10 +5,7 @@ echo "Install IBM DataPower Service"
 echo
 
 # Set the project
-PROJECT=datapower
-oc new-project $PROJECT
-oc get secret ibm-entitlement-key --namespace=cp4i --export -o yaml |\
-   oc apply --namespace=datapower -f -
+PROJECT=cp4i
 
 # Define the location of the directories
 CONFIG_DIR=../drouter/config
@@ -73,6 +70,12 @@ OCP_DOMAIN_SUFFIX=$DOMAIN_SUFFIX
 if [ -z "$OCP_DOMAIN_SUFFIX" ]; then 
   OCP_DOMAIN_SUFFIX=$(oc get dns cluster -o yaml | grep baseDomain: | awk -F' ' '{print $2 }')
 fi;
+
+echo
+echo Domain suffix is $OCP_DOMAIN_SUFFIX TEST
+echo
+
+OCP_DOMAIN_SUFFIX=mycluster-wdc04-b-807030-97f2cdaea86b0f55496562172dc793b6-0000.us-east.containers.appdomain.cloud
 
 DP_ADMIN_HOST_NAME=dp-admin.$OCP_DOMAIN_SUFFIX
 sed "s/PARM_DP_ADMIN_HOST_NAME/$DP_ADMIN_HOST_NAME/g"      $MANIFESTS_DIR/admin-route-template.yaml  > $MANIFESTS_DIR/admin-route.yaml
@@ -156,3 +159,4 @@ rm $MANIFESTS_DIR/app-route.yaml
 echo
 echo "Install of IBM DataPower Service is now complete"
 echo
+
